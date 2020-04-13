@@ -1,0 +1,11 @@
+.App-content-wrapper {
+  margin-top: 20px !important;
+}
+
+.uclm-title {
+  color: #b20032;
+  font-family: "Open Sans", sans-serif;
+  text-transform: uppercase;
+  font-size: 1.2em;
+  margin: 25px 10px 15px 10px;
+}

@@ -1,0 +1,8 @@
+.list-item{
+  color:black;
+  background-color: rgba(243, 241, 241, 0.411) !important;
+}
+
+.list-item:hover{
+  background-color: #e5bac66e !important;
+}

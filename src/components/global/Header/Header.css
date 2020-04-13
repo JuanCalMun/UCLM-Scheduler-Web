@@ -40,6 +40,9 @@
   .Logo-wrapper {
     max-width: 45%;
   }
+  .Logo {
+    padding-left:0px;
+  }
 
   .Menu {
     margin-left: 45%;
@@ -50,4 +53,5 @@
     margin-left: 3%;
     font-size: 0.8em;
   }
+
 }
