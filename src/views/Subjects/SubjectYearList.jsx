@@ -14,13 +14,17 @@ const SUBJECT_TYPES_STYLES = {
 
 const YEARS_TEXT = ["primer", "segundo", "tercer", "cuarto", "quinto", "sexto"];
 
-const SubjectYearList = ({ year, subjects }) => {
+const SubjectYearList = ({ year, subjects, onSelect }) => {
   return (
     <div>
       <p className="uclm-title">{YEARS_TEXT[year - 1]} Año</p>
-      <div className="list is-hoverable ">
+      <div className="list is-hoverable">
         {subjects.map((subject) => (
-          <a key={subject.id} className="list-item is-clipped">
+          <a
+            key={subject.id}
+            className="list-item is-clipped"
+            onClick={() => onSelect(subject.id)}
+          >
             {subject.name}
             <div
               className={

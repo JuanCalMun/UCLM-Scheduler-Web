@@ -1,0 +1,22 @@
+.modal-content {
+  height: auto;
+  width: 65% !important;
+  background-color: white;
+  border-radius: 3px;
+}
+
+.modal-title .modal-subtitle{
+  margin: 10px 0px 0px 10px;
+  font-weight: 50000 !important;
+  
+}
+
+.modal-text{
+  padding: 0px 10px 0px 10px;
+  margin:10px 0px 40px 2px;
+}
+
+.modal-link{
+  color: blue !important;
+  margin: 0px 30px 20px 0px !important;
+}

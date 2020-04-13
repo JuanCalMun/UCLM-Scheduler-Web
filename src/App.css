@@ -6,6 +6,13 @@
   color: #b20032;
   font-family: "Open Sans", sans-serif;
   text-transform: uppercase;
-  font-size: 1.2em;
+  font-size: 1.8em;
   margin: 25px 10px 15px 10px;
+}
+
+.uclm-subtitle {
+  color: #b20032;
+  font-family: "Open Sans", sans-serif;
+  font-size: 1.2em;
+  margin-left: 10px;
 }

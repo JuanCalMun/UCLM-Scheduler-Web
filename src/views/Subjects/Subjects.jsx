@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Axios from "axios";
 import SubjectYearList from "./SubjectYearList";
+import ModalSubject from "./ModalSubject";
 
 class Subjects extends Component {
   constructor(props) {
@@ -8,7 +9,13 @@ class Subjects extends Component {
     this.state = {
       subjects: [],
       years: [],
+      modal: {
+        visible: false,
+        subject: {},
+      },
     };
+    this.handleSelectSubject = this.handleSelectSubject.bind(this);
+    this.handleCloseModal = this.handleCloseModal.bind(this);
   }
 
   componentDidMount() {
@@ -21,6 +28,20 @@ class Subjects extends Component {
     });
   }
 
+  handleSelectSubject(subjectId) {
+    Axios.get("http://localhost:8080/api/v1/subjects/" + subjectId).then(
+      (response) => {
+        this.setState({
+          ...this.state,
+          modal: { visible: true, subject: response.data },
+        });
+      }
+    );
+  }
+  handleCloseModal() {
+    this.setState({ ...this.state, modal: { visible: false, subject: {} } });
+  }
+
   render() {
     return (
       <div className="Subjects">
@@ -31,8 +52,15 @@ class Subjects extends Component {
             subjects={this.state.subjects.filter(
               (subject) => subject.year === year
             )}
+            onSelect={this.handleSelectSubject}
           />
         ))}
+
+        <ModalSubject
+          visible={this.state.modal.visible}
+          subject={this.state.modal.subject}
+          onClose={this.handleCloseModal}
+        />
       </div>
     );
   }

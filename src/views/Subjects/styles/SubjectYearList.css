@@ -1,8 +1,19 @@
-.list-item{
-  color:black;
+.list-item {
+  color: black;
   background-color: rgba(243, 241, 241, 0.411) !important;
 }
 
-.list-item:hover{
+.list-item:hover {
   background-color: #e5bac66e !important;
+}
+
+.swal2-title {
+  color: #b20032;
+  font-family: "Open Sans", sans-serif;
+  text-transform: uppercase;
+  text-align: left !important;
+  color: #b20032 !important;
+}
+.swal2-content{
+  text-align: left !important;
 }
