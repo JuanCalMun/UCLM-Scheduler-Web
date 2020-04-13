@@ -1,0 +1,53 @@
+.Header-line,.Menu{
+  top: 40px;
+  height: 32px;
+  width: 100%;
+  background-color: #b20032;
+  position: absolute;
+}
+
+.Menu {
+  margin-left: 279px;
+  margin-top: 3px;
+  
+}
+
+.Menu a{
+  margin-left: 3%;
+  padding:3px;
+  font-family: "Open Sans", sans-serif;
+  color: white;
+  text-transform: uppercase;
+  font-size: 1.2em;
+}
+
+.Menu a:hover{
+  color: grey;
+}
+
+.Logo-wrapper {
+  height: 80px;
+  background-color: white;
+  width: 279px;
+}
+
+.Logo {
+  padding-left: 12px;
+  max-height: 100%;
+}
+
+@media (max-width: 675px) {
+  .Logo-wrapper {
+    max-width: 45%;
+  }
+
+  .Menu {
+    margin-left: 45%;
+  }
+
+  .Menu a {
+    padding-top: 5px;
+    margin-left: 3%;
+    font-size: 0.8em;
+  }
+}
