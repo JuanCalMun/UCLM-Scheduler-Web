@@ -1,22 +1,48 @@
-.modal-content {
+.modal-card {
   height: auto;
   width: 65% !important;
   background-color: white;
   border-radius: 3px;
 }
+.modal-title {
+  margin: 0px 0px 0px 25px !important;
+}
 
-.modal-title .modal-subtitle{
-  margin: 10px 0px 0px 10px;
+.modal-card-head{
+  padding:17px!important;
+  height: 10px !important;
+  border: white solid 0px !important;
+  background-color: white !important;
+}
+.modal-card-body{
+  padding:0px !important;
+  overflow: hidden !important;
+}
+.modal-subtitle {
+  margin: 2px 0px 0px 25px !important;
   font-weight: 50000 !important;
-  
 }
 
-.modal-text{
-  padding: 0px 10px 0px 10px;
-  margin:10px 0px 40px 2px;
+.modal-subtitle-margin {
+  margin-left: 4%;
 }
 
-.modal-link{
+.uclm-subtitle .tag {
+  margin-left: 10px;
+}
+
+.modal-text {
+  padding: 0px 20px 0px 20px;
+  margin: 10px 50px 40px 25px;
+  max-height: 400px;
+  overflow: auto;
+  font-family: "Verdana", "Geneva", "sans-serif";
+  font-size: 17px;
+  line-height: 30px;
+  justify-content: center;
+}
+
+.modal-link {
   color: blue !important;
   margin: 0px 30px 20px 0px !important;
 }

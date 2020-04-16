@@ -1,32 +1,25 @@
 import React from "react";
 import PropTypes from "prop-types";
 import "./styles/SubjectYearList.css";
+import {SUBJECT_TYPES_STYLES} from "../constants";
 
-const SUBJECT_TYPES_STYLES = {
-  Troncal: "is-danger",
-  "Específica de Ingeniería del Software": "is-primary",
-  "Específica de Ingeniería de Computadores": "is-link",
-  "Específica de Computación": "is-warning",
-  "Específica de Tecnologías de la Información": "is-success",
-  Optativa: "is-black",
-  "Trabajo Fin de Grado": "is-danger",
-};
 
 const YEARS_TEXT = ["primer", "segundo", "tercer", "cuarto", "quinto", "sexto"];
 
 const SubjectYearList = ({ year, subjects, onSelect }) => {
   return (
     <div>
-      <p className="uclm-title">{YEARS_TEXT[year - 1]} Año</p>
+      <p className="uclm-title small">{YEARS_TEXT[year - 1]} Año</p>
       <div className="list is-hoverable">
         {subjects.map((subject) => (
-          <a
-            key={subject.id}
-            className="list-item is-clipped"
+          <span
+            key={"item-" + subject.id}
+            className="list-item is-clipped clickable"
             onClick={() => onSelect(subject.id)}
           >
             {subject.name}
             <div
+              key={"subject-" + subject.id}
               className={
                 "tag is-light is-rounded is-pulled-right " +
                 SUBJECT_TYPES_STYLES[subject.type]
@@ -34,7 +27,7 @@ const SubjectYearList = ({ year, subjects, onSelect }) => {
             >
               {subject.type.replace("Específica de ", "")}
             </div>
-          </a>
+          </span>
         ))}
       </div>
     </div>

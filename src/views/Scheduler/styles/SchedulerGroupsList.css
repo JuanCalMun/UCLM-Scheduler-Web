@@ -1,0 +1,26 @@
+.shceduler-groups-list {
+  background-color: #b20032;
+  border: #b20032 solid 5px !important;
+  border-radius: 2%;
+}
+
+.groups-list-title {
+  color: white !important;
+}
+
+.groups-list-title .uclm-subtitle {
+  color: white;
+}
+
+.groups-list-content {
+  margin: 5px 2px 3px 2px;
+  background-color: white;
+  height: 700px;
+  border-radius: 2%;
+  overflow: scroll;
+}
+
+.margin-left-list {
+  margin-left: 40px;
+  font-size: 0.85em;
+}

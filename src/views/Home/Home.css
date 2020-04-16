@@ -1,0 +1,11 @@
+.text-wrapper {
+  padding: 0px 10% 50px 20px;  
+  font-family: "Verdana", "Geneva", "sans-serif";
+  font-size: 17px;
+  line-height: 30px;
+  justify-content: center;
+}
+
+.image{
+  max-height: 200px;
+}

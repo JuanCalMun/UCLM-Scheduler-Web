@@ -45,6 +45,7 @@ class Subjects extends Component {
   render() {
     return (
       <div className="Subjects">
+        <p className="uclm-title">Lista de asignaturas</p>
         {this.state.years.map((year) => (
           <SubjectYearList
             key={year}
