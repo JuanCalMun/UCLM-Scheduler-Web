@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import Axios from "axios";
+import "./styles/SchedulerGroupsList.css";
+import { Multiselect } from "multiselect-react-dropdown";
 
 class SchedulerFilter extends Component {
   static propTypes = {
@@ -10,18 +12,22 @@ class SchedulerFilter extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: "",
+      name: this.props.selectedValues.name,
       types: [],
       years: [
-        { code: 1, name: "Primero", selected: false },
-        { code: 2, name: "Segundo", selected: false },
-        { code: 3, name: "Tercero", selected: false },
-        { code: 4, name: "Cuarto", selected: false },
+        { code: 1, name: "Primero" },
+        { code: 2, name: "Segundo" },
+        { code: 3, name: "Tercero" },
+        { code: 4, name: "Cuarto" },
       ],
+      selected: {
+        types: this.props.selectedValues.types,
+        years: this.props.selectedValues.years,
+      },
     };
     this.handleNameChange = this.handleNameChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleClear = this.handleClear.bind(this);
+    this.handleReset = this.handleReset.bind(this);
   }
 
   componentDidMount() {
@@ -43,124 +49,114 @@ class SchedulerFilter extends Component {
     this.setState({ name: event.target.value });
   }
 
-  handleChangeCheckbox(field, modifiedStatus) {
+  handleChangeMultiselect(field, selectedValues) {
     const newState = this.state;
-    const newValue = newState[field].map((field) =>
-      field.code === modifiedStatus.code ? modifiedStatus : field
-    );
-    newState[field] = newValue;
+    newState.selected[field] = selectedValues;
     this.setState(newState);
   }
 
   handleSubmit(event) {
     event.preventDefault();
-    const selectedYears = this.state.years
-      .filter((year) => year.selected)
-      .reduce((accumulator, year) => accumulator.concat(year.code), []);
-
-    const selectedTypes = this.state.types
-      .filter((type) => type.selected)
-      .reduce((accumulator, type) => accumulator.concat(type.name), []);
-
-    const nameToFilter = this.state.name.toLowerCase();
-
-    const filteredSubjects = this.props.subjects.filter(
-      subject =>
-        ((selectedYears.length === 0 || selectedYears.includes(subject.year)) &&
-        (selectedTypes.length === 0 || selectedTypes.includes(subject.type)) &&
-        (nameToFilter === "" || subject.name.toLowerCase().includes(nameToFilter)))
+    const selectedYears = this.state.selected.years.reduce(
+      (accumulator, year) => accumulator.concat(year.code),
+      []
     );
-    this.props.onSubmit(filteredSubjects);
+    const selectedTypes = this.state.selected.types.reduce(
+      (accumulator, type) => accumulator.concat(type.name),
+      []
+    );
+    const nameToFilter = this.state.name.toLowerCase();
+    console.log(this.props.subjects);
+    // console.log(selectedTypes, selectedYears, nameToFilter);
+    const filteredSubjects = this.props.subjects.filter(
+      (subject) =>
+        (selectedYears.length === 0 || selectedYears.includes(subject.year)) &&
+        (selectedTypes.length === 0 || selectedTypes.includes(subject.type)) &&
+        (nameToFilter === "" ||
+          subject.name.toLowerCase().includes(nameToFilter))
+    );
+    // console.log(filteredSubjects);
+    this.props.onSubmit(filteredSubjects, this.state.selected);
   }
 
-  handleClear(event) {
+  handleReset(event) {
     event.preventDefault();
-
-    const clearedYears = this.state.years.map((year) => ({
-      ...year,
-      selected: false,
-    }));
-    const clearedTypes = this.state.types.map((types) => ({
-      ...types,
-      selected: false,
-    }));
-    const nameToFilter = "";
-
-    this.setState({
-      types: clearedTypes,
-      years: clearedYears,
-      name: nameToFilter,
-    });
-    
-    this.props.onSubmit(this.props.subjects);
+    const newState = this.state;
+    newState.selected.years = [];
+    newState.selected.types = [];
+    newState.name = "";
+    this.setState(newState);
+    this.props.onSubmit(this.props.subjects, newState.selected);
   }
 
   render() {
     return (
       <div className="scheduler-filter">
-        <span className="uclm-subtitle">Filtro de asignaturas</span>
-        <form>
-          <div className="field-body">
-            <div className="field">
-              <label className="label">Año</label>
-              {this.state.years.map((year) => (
-                <div key={year.code}>
-                  <label className="checkbox">
-                    <input
-                      type="checkbox"
-                      checked={year.selected}
-                      onChange={() =>
-                        this.handleChangeCheckbox("years", {
-                          ...year,
-                          selected: !year.selected,
-                        })
-                      }
-                    />
-                    {year.name}
-                  </label>
-                </div>
-              ))}
+        <div className="scheduler-filter-title">
+          <span className="uclm-subtitle">Filtro de asignaturas</span>
+        </div>
+        <div className="scheduler-filter-content">
+          <form onSubmit={this.handleSubmit} onReset={this.handleReset}>
+            <div className="columns">
+              <div className="column field ">
+                <label className="label">Nombre</label>
+                <input
+                  className="input"
+                  type="text"
+                  placeholder="Asignaura a buscar"
+                  onChange={this.handleNameChange}
+                  value={this.state.name}
+                />
+              </div>
+              <div className="column field ">
+                <label className="label">Tipo</label>
+                <Multiselect
+                  displayValue="name"
+                  options={this.state.types.map((type) => ({
+                    name: type.name,
+                    code: type.code,
+                  }))}
+                  selectedValues={this.state.selected.types}
+                  onSelect={(values) =>
+                    this.handleChangeMultiselect("types", values)
+                  }
+                  onRemove={(values) =>
+                    this.handleChangeMultiselect("types", values)
+                  }
+                  placeholder={"Tipos de asignatura"}
+                  avoidHighlightFirstOption
+                />
+              </div>
+              <div className="column field ">
+                <label className="label">Año</label>
+                <Multiselect
+                  displayValue="name"
+                  options={this.state.years.map((year) => ({
+                    name: year.name,
+                    code: year.code,
+                  }))}
+                  selectedValues={this.state.selected.years}
+                  onSelect={(values) =>
+                    this.handleChangeMultiselect("years", values)
+                  }
+                  onRemove={(values) =>
+                    this.handleChangeMultiselect("years", values)
+                  }
+                  placeholder={"Años de asignaturas"}
+                  avoidHighlightFirstOption
+                />
+              </div>
             </div>
-            <div className="field">
-              <label className="label">Tipo</label>
-              {this.state.types.map((type) => (
-                <div key={type.id}>
-                  <label className="checkbox">
-                    <input
-                      type="checkbox"
-                      checked={type.selected}
-                      onChange={() =>
-                        this.handleChangeCheckbox("types", {
-                          ...type,
-                          selected: !type.selected,
-                        })
-                      }
-                    />
-                    {type.name}
-                  </label>
-                </div>
-              ))}
+            <div className="field is-grouped is-grouped-right">
+              <button className="button is-small" type="submit">
+                Filtrar
+              </button>
+              <button className="button is-text is-small" type="reset">
+                Limpiar
+              </button>
             </div>
-            <div className="field">
-              <label className="label">Nombre</label>
-              <input
-                className="input"
-                type="text"
-                placeholder="Asignaura a buscar"
-                onChange={this.handleNameChange}
-                value={this.state.name}
-              />
-            </div>
-          </div>
-          <div className="field is-grouped is-grouped-right">
-            <p className="button is-text" onClick={this.handleClear}>
-              Limpiar
-            </p>
-            <p className="button " onClick={this.handleSubmit}>
-              Filtrar
-            </p>
-          </div>
-        </form>
+          </form>
+        </div>
       </div>
     );
   }

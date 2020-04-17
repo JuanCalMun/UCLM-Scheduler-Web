@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Axios from "axios";
 import "./styles/SchedulerGroupsList.css";
+import ListGroupItem from "./ListGroupItem";
 
 class SubjectGroupsList extends Component {
   constructor(props) {
@@ -8,6 +9,7 @@ class SubjectGroupsList extends Component {
     this.state = {
       groups: [],
     };
+    this.handleSelectItem = this.handleSelectItem.bind(this);
   }
 
   componentDidMount() {
@@ -31,27 +33,35 @@ class SubjectGroupsList extends Component {
     }
   }
 
+  handleSelectItem(groupId) {
+    const selectedGroup = this.state.groups.find(
+      (group) => group.id === groupId
+    );
+    const response = selectedGroup.shifts.reduce(
+      (accumulator, shift) =>
+        accumulator.concat({
+          subject: selectedGroup.shifts[0].subjectId,
+          group: selectedGroup.shifts[0].subjectGroupId,
+          groupCode: selectedGroup.shifts[0].subjectGroupCode,
+          weekday: shift.weekday,
+          shifts: shift.timeSlot,
+          lessonType: shift.lessonType,
+          room: shift.room,
+        }),
+      []
+    );
+    this.props.onSelect(response);
+  }
+
   render() {
-    console.log(this.state);
     return (
       <div className="subject-group-list margin-left-list">
         {this.state.groups.map((group) => (
-          <span className="list-item is-clipped clickable">
-            {group.id} -
-            <p>
-              Teoria{" "}
-              {group.shifts
-                .filter((shift) => shift.lessonType === 1)
-                .map((shift) => shift.room)}
-            </p>
-            <p>
-              Laboratorio{" "}
-              {group.shifts
-                .filter((shift) => shift.lessonType === 2)
-                .map((shift) => shift.room)}
-            </p>
-            {group.id}
-          </span>
+          <ListGroupItem
+            key={group.id}
+            group={group}
+            onSelect={this.handleSelectItem}
+          />
         ))}
       </div>
     );

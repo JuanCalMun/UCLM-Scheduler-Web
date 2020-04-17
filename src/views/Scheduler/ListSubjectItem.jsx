@@ -9,10 +9,16 @@ class ListSubjectItem extends Component {
     this.state = {
       isExpanded: false,
     };
+    this.handleSelectGroup = this.handleSelectGroup.bind(this);
   }
 
   handleOnClick(isExpanded) {
     this.setState({ isExpanded });
+  }
+
+  handleSelectGroup(props) {
+    this.setState({ isExpanded: false });
+    this.props.onSelect(props);
   }
 
   render() {
@@ -33,7 +39,10 @@ class ListSubjectItem extends Component {
           </div>
         </span>
         {this.state.isExpanded && (
-          <SubjectGroupsList subjectId={this.props.subject.id} />
+          <SubjectGroupsList
+            subjectId={this.props.subject.id}
+            onSelect={this.handleSelectGroup}
+          />
         )}
       </div>
     );

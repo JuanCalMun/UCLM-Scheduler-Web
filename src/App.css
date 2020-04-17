@@ -17,6 +17,10 @@
   margin-left: 10px;
 }
 
-.clickable{
+.uclm-little-top {
+  height: 60px !important;
+}
+
+.clickable {
   cursor: pointer;
 }

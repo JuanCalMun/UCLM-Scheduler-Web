@@ -1,26 +1,58 @@
-.shceduler-groups-list {
+.shceduler-groups-list,
+.scheduler-filter {
   background-color: #b20032;
   border: #b20032 solid 5px !important;
   border-radius: 2%;
 }
 
-.groups-list-title {
-  color: white !important;
-}
-
 .groups-list-title .uclm-subtitle {
   color: white;
 }
+.scheduler-filter-title .uclm-subtitle {
+  color: white;
+}
 
-.groups-list-content {
+.groups-list-content,
+.scheduler-filter-content {
   margin: 5px 2px 3px 2px;
   background-color: white;
-  height: 700px;
   border-radius: 2%;
+}
+
+.scheduler-filter-content {
+  margin-top: 5px;
+  padding: 20px;
+}
+
+.groups-list-content {
+  height: 650px !important;
   overflow: scroll;
 }
 
 .margin-left-list {
-  margin-left: 40px;
-  font-size: 0.85em;
+  margin-left: 10px;
+}
+
+.list-item-group {
+  border: solid #b20032 1px;
+}
+
+.list-group-item-header {
+  color: #b20032;
+  font-weight: bold;
+  font-size: 1em;
+}
+
+.list-group-item-title {
+  color: #b20032;
+  font-size: 1em;
+}
+
+.list-group-item-text span {
+  margin-left: 20px;
+  font-size: 0.95em;
+}
+
+.chip { 
+  background: #7e0024 !important;
 }
