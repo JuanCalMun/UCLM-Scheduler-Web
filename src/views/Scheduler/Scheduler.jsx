@@ -6,6 +6,7 @@ import SchedulerGroupsList from "./SchedulerGroupsList";
 import SchedulerDiagram from "./SchedulerDiagram";
 import Switch from "react-switch";
 import Swal from "sweetalert2";
+import ListSelectedShifts from "./ListSelectedShifts";
 
 class Scheduler extends Component {
   constructor(props) {
@@ -17,7 +18,6 @@ class Scheduler extends Component {
           subjects: [],
           filteredSubjects: null,
           selectedShifts: [],
-          selectedGroups: [],
           filterValues: {
             name: "",
             types: [],
@@ -29,7 +29,6 @@ class Scheduler extends Component {
           subjects: [],
           filteredSubjects: null,
           selectedShifts: [],
-          selectedGroups: [],
           filterValues: {
             name: "",
             types: [],
@@ -37,15 +36,12 @@ class Scheduler extends Component {
           },
         },
       ],
-      subjects: [],
-      filteredSubjects: null,
       timeslots: [],
-      selectedShifts: [],
-      selectedGroups: [],
       selectedCuatermester: 1,
     };
     this.handleSelectSubjectGroup = this.handleSelectSubjectGroup.bind(this);
     this.handleIncompatibleTimes = this.handleIncompatibleTimes.bind(this);
+    this.handleDeleteSubject = this.handleDeleteSubject.bind(this);
   }
   advises = {
     warning: true,
@@ -97,8 +93,6 @@ class Scheduler extends Component {
   }
 
   handleIncompatibleTimes(code) {
-    console.log(this.advises);
-    console.log(code);
     if (this.advises[code]) {
       this.advises[code] = !this.advises[code];
       const options =
@@ -107,6 +101,16 @@ class Scheduler extends Component {
           : { text: "Puede que exista una incompatibilidad entre horarios" };
       Swal.fire({ ...options, icon: code });
     }
+  }
+
+  handleDeleteSubject(subjectId) {
+    const newState = this.state;
+    newState.cuatermesterStates[
+      this.state.selectedCuatermester - 1
+    ].selectedShifts = this.state.cuatermesterStates[
+      this.state.selectedCuatermester - 1
+    ].selectedShifts.filter((shift) => shift.subject !== subjectId);
+    this.setState(newState);
   }
 
   render() {
@@ -147,6 +151,14 @@ class Scheduler extends Component {
                 ].subjects
               }
               onSelect={this.handleSelectSubjectGroup}
+            />
+            <ListSelectedShifts
+              selectedShifts={
+                this.state.cuatermesterStates[
+                  this.state.selectedCuatermester - 1
+                ].selectedShifts
+              }
+              onDelete={this.handleDeleteSubject}
             />
           </div>
           <div className="column">

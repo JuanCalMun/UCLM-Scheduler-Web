@@ -66,8 +66,6 @@ class SchedulerFilter extends Component {
       []
     );
     const nameToFilter = this.state.name.toLowerCase();
-    console.log(this.props.subjects);
-    // console.log(selectedTypes, selectedYears, nameToFilter);
     const filteredSubjects = this.props.subjects.filter(
       (subject) =>
         (selectedYears.length === 0 || selectedYears.includes(subject.year)) &&
@@ -103,7 +101,7 @@ class SchedulerFilter extends Component {
                 <input
                   className="input"
                   type="text"
-                  placeholder="Asignaura a buscar"
+                  placeholder="Asignatura a buscar"
                   onChange={this.handleNameChange}
                   value={this.state.name}
                 />

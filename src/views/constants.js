@@ -1,5 +1,5 @@
 export const SUBJECT_TYPES_STYLES = {
-  Troncal: "is-danger",
+  Troncal: "is-black",
   "Específica de Ingeniería del Software": "is-primary",
   "Específica de Ingeniería de Computadores": "is-link",
   "Específica de Computación": "is-warning",
@@ -11,7 +11,7 @@ export const SUBJECT_TYPES_STYLES = {
 export const WEEKDAYS = [
   { id: 1, char: "L", name: "Lunes" },
   { id: 2, char: "M", name: "Martes" },
-  { id: 3, char: "X", name: "Miercoles" },
+  { id: 3, char: "X", name: "Miércoles" },
   { id: 4, char: "J", name: "Jueves" },
   { id: 5, char: "V", name: "Viernes" },
 ];
@@ -55,6 +55,6 @@ export const TIME_SLOTS = [
 ];
 
 export const LESSON_TYPES = [
-  { id: 1, name: "Teoria" },
+  { id: 1, name: "Teoría" },
   { id: 2, name: "Laboratorio" },
 ];

@@ -53,6 +53,16 @@
   font-size: 0.95em;
 }
 
-.chip { 
+.chip {
   background: #7e0024 !important;
+}
+
+.selected,
+.selected:hover {
+  background-color: #dddddd !important;
+  color: grey !important;
+}
+
+.margin-top{
+  margin-top: 20px !important;
 }

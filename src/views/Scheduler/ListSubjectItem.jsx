@@ -8,16 +8,19 @@ class ListSubjectItem extends Component {
     super(props);
     this.state = {
       isExpanded: false,
+      isClickable: true,
     };
     this.handleSelectGroup = this.handleSelectGroup.bind(this);
   }
 
   handleOnClick(isExpanded) {
-    this.setState({ isExpanded });
+    if (this.state.isClickable) {
+      this.setState({ isExpanded });
+    }
   }
 
   handleSelectGroup(props) {
-    this.setState({ isExpanded: false });
+    this.setState({ isExpanded: false, isClickable: false });
     this.props.onSelect(props);
   }
 
@@ -25,7 +28,10 @@ class ListSubjectItem extends Component {
     return (
       <div>
         <span
-          className="list-item is-clipped clickable"
+          className={
+            "list-item is-clipped " +
+            (this.state.isClickable ? " clickable " : " selected ")
+          }
           onClick={() => this.handleOnClick(!this.state.isExpanded)}
         >
           {this.props.subject.year} - {this.props.subject.name}

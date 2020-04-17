@@ -36,7 +36,6 @@ const ListGroupItem = ({ group, onSelect }) => {
                       " / " +
                       getTimeSlot(shift.timeSlot, "endTime")}
                   </span>
-                  {/* <span>{shift.room}</span> */}
                 </p>
               ))}
           </div>
