@@ -73,7 +73,6 @@ class SchedulerFilter extends Component {
         (nameToFilter === "" ||
           subject.name.toLowerCase().includes(nameToFilter))
     );
-    // console.log(filteredSubjects);
     this.props.onSubmit(filteredSubjects, this.state.selected);
   }
 

@@ -2,10 +2,10 @@ import React from "react";
 import "./styles/SchedulerGroupsList.css";
 import ListSubjectItem from "./ListSubjectItem";
 
-const SchedulerGroupsList = ({ subjects, onSelect }) => (
+const SchedulerGroupsList = ({ subjects, onSelectGroup,onSelectSubject }) => (
   <div className="shceduler-groups-list">
     <div className="groups-list-title">
-      <span className="uclm-subtitle"> Lista de grupos</span>
+      <span className="uclm-subtitle"> Lista de asignaturas</span>
     </div>
     <div className="groups-list-content">
       <div className="list is-hoverable">
@@ -13,7 +13,10 @@ const SchedulerGroupsList = ({ subjects, onSelect }) => (
           <ListSubjectItem
             key={subject.id}
             subject={subject}
-            onSelect={onSelect}
+            onSelectGroup={onSelectGroup}
+            onSelectSubject={onSelectSubject}
+            isClickable={subject.isClickable}
+            isExpanded={subject.isExpanded}
           />
         ))}
       </div>

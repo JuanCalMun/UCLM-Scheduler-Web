@@ -18,14 +18,11 @@ const SchedulerDiagram = ({ timeslots, selectedShifts, onIncompatibility }) => {
     let matchedShifts = selectedShifts.filter(
       (shift) => shift.weekday === weekday.id && shift.shifts === timeSlot.id
     );
-    let status = "";
     switch (true) {
       case matchedShifts.length > 2:
-        status = " danger ";
         onIncompatibility("error");
         break;
       case matchedShifts.length > 1:
-        status = " warning ";
         onIncompatibility("warning");
         break;
       default:
@@ -39,8 +36,8 @@ const SchedulerDiagram = ({ timeslots, selectedShifts, onIncompatibility }) => {
         : "";
     return matchedShifts.map((shift) => (
       <div className={warning + getSubjectCellColor(shift.subject)}>
-        <p>Grupo: {shift.groupCode}</p>
-        <p>{shift.subjectName}</p>
+        <p className="has-text-weight-bold">{shift.subjectName}</p>
+        <p> {shift.groupCode}</p>
         <p>{shift.room}</p>
       </div>
     ));
@@ -49,30 +46,34 @@ const SchedulerDiagram = ({ timeslots, selectedShifts, onIncompatibility }) => {
   return (
     <div className="scheduler-diagram">
       <table className="table is-fullwidth ">
-        <tr>
-          <th></th>
-          {WEEKDAYS.map((weekday) => (
-            <th key={weekday.id} className="has-text-centered">
-              {weekday.name}
-            </th>
-          ))}
-        </tr>
-        {timeslots.map((timeSlot) => (
-          <tr key={timeSlot.id} className="time-table-row">
-            <td className="has-text-centered">
-              <p>{timeSlot.startTime}</p>
-              <hr />
-              <p>{timeSlot.endTime}</p>
-            </td>
+        <thead>
+          <tr>
+            <th></th>
             {WEEKDAYS.map((weekday) => (
-              <td key={weekday.id} className="has-text-centered ">
-                {selectedShifts &&
-                  selectedShifts.length > 0 &&
-                  getSubjectCell(weekday, timeSlot)}
-              </td>
+              <th key={weekday.id} className="has-text-centered">
+                {weekday.name}
+              </th>
             ))}
           </tr>
-        ))}
+        </thead>
+        <tbody>
+          {timeslots.map((timeSlot) => (
+            <tr key={timeSlot.id} className="time-table-row">
+              <td className="has-text-centered">
+                <p>{timeSlot.startTime}</p>
+                <hr />
+                <p>{timeSlot.endTime}</p>
+              </td>
+              {WEEKDAYS.map((weekday) => (
+                <td key={weekday.id} className="has-text-centered ">
+                  {selectedShifts &&
+                    selectedShifts.length > 0 &&
+                    getSubjectCell(weekday, timeSlot)}
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
       </table>
     </div>
   );

@@ -39,6 +39,7 @@ class Scheduler extends Component {
       timeslots: [],
       selectedCuatermester: 1,
     };
+    this.handleSelectSubject = this.handleSelectSubject.bind(this);
     this.handleSelectSubjectGroup = this.handleSelectSubjectGroup.bind(this);
     this.handleIncompatibleTimes = this.handleIncompatibleTimes.bind(this);
     this.handleDeleteSubject = this.handleDeleteSubject.bind(this);
@@ -51,13 +52,21 @@ class Scheduler extends Component {
   componentDidMount() {
     Axios.get("http://localhost:8080/api/v1/subjects").then((response) => {
       const cuatermesterStates = this.state.cuatermesterStates;
-      cuatermesterStates[0].subjects = response.data.filter(
-        (subject) => subject.quatermester === 1
-      );
-      cuatermesterStates[1].subjects = response.data.filter(
-        (subject) => subject.quatermester === 2
-      );
-      this.setState({ subjects: response.data, cuatermesterStates });
+      cuatermesterStates[0].subjects = response.data
+        .filter((subject) => subject.quatermester === 1)
+        .map((subject) => ({
+          ...subject,
+          isExpanded: false,
+          isClickable: true,
+        }));
+      cuatermesterStates[1].subjects = response.data
+        .filter((subject) => subject.quatermester === 2)
+        .map((subject) => ({
+          ...subject,
+          isExpanded: false,
+          isClickable: true,
+        }));
+      this.setState({ cuatermesterStates });
     });
     Axios.get("http://localhost:8080/api/v1/timeslots").then((response) => {
       this.setState({ timeslots: response.data });
@@ -75,6 +84,35 @@ class Scheduler extends Component {
     this.setState(newState);
   }
 
+  handleSelectSubject(subjectToExpand) {
+    const newState = this.state;
+
+    newState.cuatermesterStates[
+      this.state.selectedCuatermester - 1
+    ].subjects = newState.cuatermesterStates[
+      this.state.selectedCuatermester - 1
+    ].subjects.map((subject) =>
+      subject.id === subjectToExpand.id
+        ? { ...subject, isExpanded: !subject.isExpanded }
+        : { ...subject }
+    );
+
+    newState.cuatermesterStates[
+      this.state.selectedCuatermester - 1
+    ].filteredSubjects =
+      newState.cuatermesterStates[this.state.selectedCuatermester - 1]
+        .filteredSubjects &&
+      newState.cuatermesterStates[
+        this.state.selectedCuatermester - 1
+      ].filteredSubjects.map((subject) =>
+        subject.id === subjectToExpand.id
+          ? { ...subject, isExpanded: !subject.isExpanded }
+          : { ...subject }
+      );
+
+    this.setState(newState);
+  }
+
   handleSelectSubjectGroup(selectedShifts) {
     const newState = this.state;
     const selectedSubject = this.state.cuatermesterStates[
@@ -89,6 +127,30 @@ class Scheduler extends Component {
     ].selectedShifts = this.state.cuatermesterStates[
       this.state.selectedCuatermester - 1
     ].selectedShifts.concat(newSelectedShifts);
+
+    newState.cuatermesterStates[
+      this.state.selectedCuatermester - 1
+    ].subjects = newState.cuatermesterStates[
+      this.state.selectedCuatermester - 1
+    ].subjects.map((subject) =>
+      subject.id === selectedSubject.id
+        ? { ...subject, isExpanded: false, isClickable: false }
+        : { ...subject }
+    );
+
+    newState.cuatermesterStates[
+      this.state.selectedCuatermester - 1
+    ].filteredSubjects =
+      newState.cuatermesterStates[this.state.selectedCuatermester - 1]
+        .filteredSubjects &&
+      newState.cuatermesterStates[
+        this.state.selectedCuatermester - 1
+      ].filteredSubjects.map((subject) =>
+        subject.id === selectedSubject.id
+          ? { ...subject, isExpanded: false, isClickable: false }
+          : { ...subject }
+      );
+
     this.setState(newState);
   }
 
@@ -97,8 +159,15 @@ class Scheduler extends Component {
       this.advises[code] = !this.advises[code];
       const options =
         code === "error"
-          ? { text: "Existen asignaturas con incompatibilidades" }
-          : { text: "Puede que exista una incompatibilidad entre horarios" };
+          ? {
+              title: "El horario creado es totalmente incompatible",
+              text: "por favor revisa y elimina las asignaturas incompatibles",
+            }
+          : {
+              title: "Puede que exista una incompatibilidad entre horarios",
+              text:
+                "por favor revisa la compatibilidad entre las asignaturas destacadas",
+            };
       Swal.fire({ ...options, icon: code });
     }
   }
@@ -110,6 +179,29 @@ class Scheduler extends Component {
     ].selectedShifts = this.state.cuatermesterStates[
       this.state.selectedCuatermester - 1
     ].selectedShifts.filter((shift) => shift.subject !== subjectId);
+
+    newState.cuatermesterStates[
+      this.state.selectedCuatermester - 1
+    ].subjects = newState.cuatermesterStates[
+      this.state.selectedCuatermester - 1
+    ].subjects.map((subject) =>
+      subject.id === subjectId
+        ? { ...subject, isExpanded: false, isClickable: true }
+        : { ...subject }
+    );
+
+    newState.cuatermesterStates[
+      this.state.selectedCuatermester - 1
+    ].filteredSubjects =
+      newState.cuatermesterStates[this.state.selectedCuatermester - 1]
+        .filteredSubjects &&
+      newState.cuatermesterStates[
+        this.state.selectedCuatermester - 1
+      ].filteredSubjects.map((subject) =>
+        subject.id === subjectId
+          ? { ...subject, isExpanded: false, isClickable: true }
+          : { ...subject }
+      );
     this.setState(newState);
   }
 
@@ -122,14 +214,13 @@ class Scheduler extends Component {
             <p className="uclm-subtitle">Cuatrimestre</p>
             <span>Primero </span>
             <Switch
-              checked={this.state.isSecondCuatermester}
+              checked={this.state.selectedCuatermester === 2}
               uncheckedIcon={false}
               checkedIcon={false}
               offColor="#888"
               onColor="#888"
               onChange={(checked) =>
                 this.setState({
-                  isSecondCuatermester: checked,
                   selectedCuatermester: checked ? 2 : 1,
                 })
               }
@@ -150,7 +241,8 @@ class Scheduler extends Component {
                   this.state.selectedCuatermester - 1
                 ].subjects
               }
-              onSelect={this.handleSelectSubjectGroup}
+              onSelectGroup={this.handleSelectSubjectGroup}
+              onSelectSubject={this.handleSelectSubject}
             />
             <ListSelectedShifts
               selectedShifts={

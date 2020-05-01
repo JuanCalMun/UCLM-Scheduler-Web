@@ -7,7 +7,7 @@ const Home = () => {
     <div>
       <p className="uclm-title">Gestión de tiempo académico</p>
       <div className="text-wrapper">
-        <p>
+        <p className="has-text-justified">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Iam enim
           adesse poterit. Quae quidem res efficit, ne necesse sit isdem de rebus
           semper quasi dictata decantare neque a commentariolis suis discedere.
@@ -23,7 +23,7 @@ const Home = () => {
           <img src={ClocksImage} alt="clockImage"/>
         </figure>
         <br />
-        <p>
+        <p className="has-text-justified">
           Sed tamen enitar et, si minus multa mihi occurrent, non fugiam ista
           popularia. Qui igitur convenit ab alia voluptate dicere naturam
           proficisci, in alia summum bonum ponere? Negat enim summo bono afferre
@@ -41,7 +41,7 @@ const Home = () => {
           <img src={TimeImage} alt="timeImage"/>
         </figure>
         <br />
-        <p>
+        <p className="has-text-justified">
           Illorum vero ista ipsa quam exilia de virtutis vi! Quam tantam volunt
           esse, ut beatum per se efficere possit. Qui non moveatur et offensione
           turpitudinis et comprobatione honestatis? Sed ut iis bonis erigimur,

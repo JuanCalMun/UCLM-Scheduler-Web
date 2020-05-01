@@ -11,8 +11,6 @@ const ListSelectedShifts = ({ selectedShifts, onDelete }) => {
   const extendedSubjects = subjects.map((subject) =>
     selectedShifts.find((shift) => shift.subject === subject)
   );
-  console.log(extendedSubjects);
-  console.log(selectedShifts);
 
   const handleDeleteSubject = (subjectId) => {
     onDelete(subjectId);

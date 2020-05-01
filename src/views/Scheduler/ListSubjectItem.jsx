@@ -1,62 +1,52 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
+import React from "react";
 import { SUBJECT_TYPES_STYLES } from "../constants";
 import SubjectGroupsList from "./SubjectGroupsList";
 
-class ListSubjectItem extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isExpanded: false,
-      isClickable: true,
-    };
-    this.handleSelectGroup = this.handleSelectGroup.bind(this);
-  }
-
-  handleOnClick(isExpanded) {
-    if (this.state.isClickable) {
-      this.setState({ isExpanded });
+const ListSubjectItem = ({
+  subject,
+  isExpanded,
+  isClickable,
+  onSelectGroup,
+  onSelectSubject,
+}) => {
+  const handleOnClick = () => {
+    if (isClickable) {
+      onSelectSubject(subject);
     }
-  }
+  };
 
-  handleSelectGroup(props) {
-    this.setState({ isExpanded: false, isClickable: false });
-    this.props.onSelect(props);
-  }
+  const handleOnSelectGroup = (shifts) => {
+    onSelectGroup(shifts);
+  };
 
-  render() {
-    return (
-      <div>
-        <span
+  return (
+    <div>
+      <span
+        className={
+          "list-item is-clipped " +
+          (isClickable ? " clickable " : " selected ") +
+          (isExpanded && " is-expanded ")
+        }
+        onClick={() => handleOnClick()}
+      >
+        {subject.year} - {subject.name}
+        <div
           className={
-            "list-item is-clipped " +
-            (this.state.isClickable ? " clickable " : " selected ")
+            "tag is-light is-rounded is-pulled-right " +
+            SUBJECT_TYPES_STYLES[subject.type]
           }
-          onClick={() => this.handleOnClick(!this.state.isExpanded)}
         >
-          {this.props.subject.year} - {this.props.subject.name}
-          <div
-            className={
-              "tag is-light is-rounded is-pulled-right " +
-              SUBJECT_TYPES_STYLES[this.props.subject.type]
-            }
-          >
-            {this.props.subject.type.replace("Específica de ", "")}
-          </div>
-        </span>
-        {this.state.isExpanded && (
-          <SubjectGroupsList
-            subjectId={this.props.subject.id}
-            onSelect={this.handleSelectGroup}
-          />
-        )}
-      </div>
-    );
-  }
-}
-
-ListSubjectItem.propTypes = {
-  onSubjecSelected: PropTypes.func,
+          {subject.type.replace("Específica de ", "")}
+        </div>
+      </span>
+      {isExpanded && (
+        <SubjectGroupsList
+          subjectId={subject.id}
+          onSelect={(shifts) => handleOnSelectGroup(shifts)}
+        />
+      )}
+    </div>
+  );
 };
 
 export default ListSubjectItem;
