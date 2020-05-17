@@ -31,7 +31,8 @@ class SchedulerFilter extends Component {
   }
 
   componentDidMount() {
-    Axios.get("http://localhost:8080/api/v1/subjecttypes").then((response) => {
+    Axios.get("http://localhost:8080/api/v1/subjecttypes")
+    .then((response) => {
       const types = response.data
         .filter((type) => type.description !== "Trabajo Fin de Grado")
         .map((type) => ({
