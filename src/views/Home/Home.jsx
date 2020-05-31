@@ -1,6 +1,6 @@
 import React from "react";
 import "./Home.css";
-import TimeImage from "./time.png";
+// import TimeImage from "./time.png";
 import ClocksImage from "./clocks.png";
 const Home = () => {
   return (
@@ -8,27 +8,28 @@ const Home = () => {
       <p className="uclm-title">Gestión de tiempo académico</p>
       <div className="text-wrapper">
         <p className="has-text-justified">
-          Estás accediendo a la herramienta de gestión de tiempo de la UCLM. 
-          Con esta herramienta podrás realizar una planificación de tu asistencia 
-          al siguiente curso escolar, asegurándo que no tendrás incompatibilidades
-          de horas ni de grupos, además obtendrás un esquema con la planificación 
-          de tus cuatrimestres como imagen, para que puedas consultarlo siempre y
-          cuando lo necesites.
+          Estás accediendo a la herramienta de gestión de tiempo de la UCLM. Con
+          esta herramienta podrás realizar una planificación de tu asistencia al
+          siguiente curso escolar, asegurándo que no tendrás incompatibilidades
+          de horas ni de grupos, además obtendrás un esquema con la
+          planificación de tus cuatrimestres como imagen, para que puedas
+          consultarlo siempre y cuando lo necesites.
         </p>
         <p className="has-text-justified">
-          En esta página podrás consultar también la listas de asignaturas disponibles
-          para escoger en cada semestre, de tal manera que te aporte toda la información
-          necesaria para ayudarte a decidir entre qué asignatura escoger, en caso de que 
-          tengas que elegir entre varias.
+          En esta página podrás consultar también la listas de asignaturas
+          disponibles para escoger en cada semestre, de tal manera que te aporte
+          toda la información necesaria para ayudarte a decidir entre qué
+          asignatura escoger, en caso de que tengas que elegir entre varias.
         </p>
         <br />
         <figure className="image is-3by1">
-          <img src={ClocksImage} alt="clockImage"/>
+          <img src={ClocksImage} alt="clockImage" />
         </figure>
         <br />
         <p className="has-text-justified">
-          Esta herramienta está desarrollada a raiz de un Trabajo de Fin de Grado de un 
-          alumno de Ingeniería Informática del campus de Albacete.
+          Esta herramienta está desarrollada por Juan Calvo Muñoz a raiz de un
+          Trabajo de Fin de Grado de un alumno de Ingeniería Informática del
+          campus de Albacete.
         </p>
         <br />
         {/* <figure className="image is-2by1">
