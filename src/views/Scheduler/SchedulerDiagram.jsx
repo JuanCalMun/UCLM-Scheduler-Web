@@ -2,7 +2,7 @@ import React from "react";
 import { WEEKDAYS } from "../constants";
 import "./styles/SchedulerDiagram.css";
 import htmlToImage from "html-to-image";
-import logo from "../../components/global/images/download.png"
+import logo from "../../components/global/images/download.png";
 
 const SchedulerDiagram = ({ timeslots, selectedShifts, onIncompatibility }) => {
   const subjectColor = Array.from(
@@ -63,8 +63,8 @@ const SchedulerDiagram = ({ timeslots, selectedShifts, onIncompatibility }) => {
         : matchedShifts.length > 1
         ? " warning "
         : "";
-    return matchedShifts.map((shift) => (
-      <div className={warning + getSubjectCellColor(shift.subject)}>
+    return matchedShifts.map((shift, index) => (
+      <div key={index} className={warning + getSubjectCellColor(shift.subject)}>
         <p className="has-text-weight-bold">{shift.subjectName}</p>
         <p> {shift.groupCode}</p>
         <p>{shift.room}</p>
@@ -81,7 +81,9 @@ const SchedulerDiagram = ({ timeslots, selectedShifts, onIncompatibility }) => {
             onClick={() => downloadImage()}
           >
             <span>Descargar</span>
-            <span><img className="logo" src={logo} alt="Logo" /></span>
+            <span>
+              <img className="logo" src={logo} alt="Logo" />
+            </span>
           </button>
         </div>
         <table id="scheduler-diagram" className="table is-fullwidth ">
@@ -104,7 +106,10 @@ const SchedulerDiagram = ({ timeslots, selectedShifts, onIncompatibility }) => {
                   <p>{timeSlot.endTime}</p>
                 </td>
                 {WEEKDAYS.map((weekday) => (
-                  <td key={weekday.id} className="has-text-centered ">
+                  <td
+                    key={timeSlot.id + "-" + weekday.id}
+                    className="has-text-centered "
+                  >
                     {selectedShifts &&
                       selectedShifts.length > 0 &&
                       getSubjectCell(weekday, timeSlot)}

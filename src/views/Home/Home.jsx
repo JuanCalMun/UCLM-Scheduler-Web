@@ -27,9 +27,30 @@ const Home = () => {
         </figure>
         <br />
         <p className="has-text-justified">
-          Esta herramienta está desarrollada por Juan Calvo Muñoz a raiz de un
-          Trabajo de Fin de Grado de un alumno de Ingeniería Informática del
-          campus de Albacete.
+          Esta herramienta está desarrollada por Juan Calvo Muñoz un alumno de
+          la Universidad de Castilla la Mancha del campus de Albacete. La web es
+          el resultado del trabajo de Fin de Grado de Ingeniería Informática
+          especializado en Tecnologías de la información. El código fuente de
+          esta aplicación es de libre disposición y se encuentra alojado en
+          GitHub en las direcciones:
+        </p>
+        <ul style={{ marginLeft: "20px" }}>
+          <li>
+            <a href="https://github.com/JuanCalMun/UCLM-Scheduler-Web">
+              Entorno front
+            </a>
+          </li>
+          <li>
+            <a href="https://github.com/JuanCalMun/UCLM-Scheduler">
+              API - Rest
+            </a>
+          </li>
+        </ul>
+        <p>
+          Cualquier Pull Request es bienvenida{" "}
+          <span role="img" aria-label="smile">
+            😊
+          </span>
         </p>
         <br />
         {/* <figure className="image is-2by1">
